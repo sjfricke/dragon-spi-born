@@ -23,10 +23,10 @@ function logType(type, name, msg) {
     if (type !== 'log'
         && type !== 'warn'
         && type !== 'error') return;
-    if (console[type]
+    if (myconsole[type]
         && typeof name === 'string'
         && typeof msg === 'string') {
-        (console[type])(
+        (myconsole[type])(
             ('%cClass ' + name + ':%c ' + msg), 'color: #a6cd94', 'color: grey'
             );
     }
