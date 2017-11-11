@@ -8,14 +8,14 @@ class Renderer {
         }
         else {
             this.$container = parentNode;
-            this.app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
+            this.app = new PIXI.Application(window.outerWidth, window.outerHeight, { backgroundColor: 0x1099bb });
             this.$container.append(this.app.view);
         }
     }
 
     doStuff() {
         // create a new Sprite from an image path
-        var bunny = PIXI.Sprite.fromImage('res/img/logo.png')
+        var bunny = PIXI.Sprite.fromImage(resPath.couch);
 
         // center the sprite's anchor point
         bunny.anchor.set(0.5);
