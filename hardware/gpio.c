@@ -4,7 +4,7 @@ uint16_t GpioDB410cMapping(int header_pin) {
   // only pin 23-34
   if (header_pin < 23 || header_pin > 34) {
     printf("ERROR: Pin %d does not have a GPIO pin mapped\n", header_pin);
-    return NULL;
+    return 0;
   }
 
   switch(header_pin) {
