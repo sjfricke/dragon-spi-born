@@ -4,7 +4,6 @@ var $body;
 function run() {
     $body = $('body');
     var app = new PIXI.Application(800, 600, { backgroundColor: 0x1099bb });
-    $()
     $body.append(app.view);
 
     // create a new Sprite from an image path
