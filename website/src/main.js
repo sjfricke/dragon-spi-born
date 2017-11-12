@@ -52,14 +52,14 @@ function setup() {
             type: 'add',
             name: 'speaker1',
             path: resPath.speaker,
-            pt: new PIXI.Point(0.45, 1),
+            pt: new PIXI.Point(0.45, 1.5),
             scale: 2
         },
         {
             type: 'add',
             name: 'speaker2',
             path: resPath.speaker,
-            pt: new PIXI.Point(0.05, 1),
+            pt: new PIXI.Point(0.05, 1.5),
             scale: 2
         },
         {
@@ -91,4 +91,17 @@ function run() {
     lightSwitch.pointerdown = function () {
         renderer.editorFilter.uniforms.mode = renderer.editorFilter.uniforms.mode ^ 0x1;
     }
+
+    let speaker1 = renderer.getElemByID('speaker1');
+    let speaker2 = renderer.getElemByID('speaker2');
+    renderer.app.ticker.add(function (delta) {
+        if (speaker1.position.y > window.outerHeight) {
+            speaker1.position.y -= 0.000004 * speaker1.position.y * speaker1.position.y;
+        }
+        else speaker1.position.y = window.outerHeight;
+        if (speaker2.position.y > window.outerHeight) {
+            speaker2.position.y -= 0.000004 * speaker2.position.y * speaker2.position.y;
+        }
+        else speaker2.position.y = window.outerHeight;
+    });
 }
