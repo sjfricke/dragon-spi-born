@@ -51,6 +51,13 @@ function setup() {
             scale: 1.3
         },
         {
+            type: 'add',
+            name: 'lightning',
+            path: resPath.lightning,
+            pt: new PIXI.Point(0.25, 0.65),
+            scale: 1.3
+        },
+        {
             type: 'addSpritesheet',
             name: 'rainAnimated',
             path: resPath.rainAnimated,
@@ -159,6 +166,9 @@ function run() {
 	let rain = renderer.getElemByID('rainAnimated');
 	rain.mask = renderer.getElemByID('sceneBounds');
 	rain.pivot.y = -rain.height / 2; // For rain rotation
+
+	let lightning = renderer.getElemByID('lightning');
+	lightning.alpha = 0;
 
     // player.interactive = true; // for clicking    
     // lightSwitch.interactive = true; // for clicking

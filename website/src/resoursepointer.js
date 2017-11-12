@@ -17,5 +17,6 @@
     lightOn: 'res/img/light_switch_on.png',
     scene: 'res/img/scene.png',
     frame: 'res/img/frame.png',
-    picture: 'res/img/picture.png'
+    picture: 'res/img/picture.png',
+    lightning: 'res/img/lightning.png'
 }

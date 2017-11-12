@@ -7,6 +7,10 @@ var rainAnim = false;
 var rainAnimSpd = 2;
 var rot = 0;
 
+var lightningAnim = false;
+var lightningFrame = 0;
+var lightningSpd = 0.2;
+
 var speakerRate = 0.00004;
 
 var playerMovingForward = false;
@@ -139,5 +143,26 @@ function rainAnimFrame() {
     else {
         rain.rotation = -1 * x * x + 2 * x;
         rot += 0.01 * rainAnimSpd;
+    }
+}
+
+function animateLightning() {
+    if (!lightningAnim) {
+        renderer.app.ticker.add(lightningAnimFrame);
+        lightningAnim = true;
+    }
+}
+
+function lightningAnimFrame() {
+    let lightning = renderer.getElemByID('lightning');
+    let x = lightningFrame + 1;
+    if (lightningFrame > 1) {
+        lightningFrame = 0;
+        renderer.app.ticker.remove(lightningAnimFrame);
+        lightningAnim = false;
+    }
+    else {
+        lightning.alpha = -1 * x * x + 2 * x;
+        lightningFrame += 0.1 * lightningSpd;
     }
 }
