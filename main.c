@@ -11,71 +11,65 @@ void webData( int type, char* value) {
   printf("busy = %d\n", busy);
   switch(type) {
   case 0:
-    animationStatus(value);
+    changeLights(atoi(value));
     break;
-  case 1:
-    updateLED(value);
-    break;
-  case 5:
-    takePhoto();
-    break;
+    //  case 1:
+    //    updateLED(value);
+    //    break;
   default:
     printf("Not a valid type! [%d]\n", type);
     break;
   }
 }
 
-void animationStatus( char* status ) {
-  switch(atoi(status)) {
-  case 0:
-    printf("Starting Lights on animation\n");
-    break;
-  case 1:
-    printf("Ending Lights on animation\n");
-    break;
-  default:
-    printf("Not a valid animation\n");
-    break;
+void changeLights( int value ) {
+  if (value == 0) {
+    LedTurnAllOff();
+  } else if (value == 1) {
+    LedTurnAllOn();
+  } else {
+    printf("Not a valid light value: %d\n", value); 
   }
-}
-
-void updateLED( char* rgb ) {
-  const char s[2] = ",";
-
-  // major assumption rgb is valid numbers
-  uint8_t red = (uint8_t)atoi(strtok(rgb, s));
-  uint8_t green =(uint8_t)atoi(strtok(NULL, s));
-  uint8_t blue = (uint8_t)atoi(strtok(NULL, s));
-
-  printf("Color:\n\tRed: %d\n\tGreen: %d\n\tBlue: %d\n", red, green, blue);
-    
-}
-
-void takePhoto( void ) {
-  printf("Taking Photo\n");
 }
 
 int main ( int argc, char* argv[] ) {
 
+  uint16_t s_button;
+  uint16_t s_touch;
+  
   g_server = (server_t*)malloc(sizeof(server_t));
   g_server->port = 6419;
   g_server->onData = webData;
 
   startServer();
 
+  // set up GPIOs
+
+  s_button =  GpioDB410cMapping(24);
+  GpioEnablePin(s_button);
+  GpioSetDirection(s_button, INPUT_PIN);
+
+  s_touch =  GpioDB410cMapping(23);
+  GpioEnablePin(s_touch);
+  GpioSetDirection(s_touch, INPUT_PIN);
+  
   LedSetup();
 
-  LedTurnAllOn();
+  while(1) {
 
-  usleep(1000* 1000);
+    if (GpioGetValue(s_touch) == 1) {
+      broadcastString("0","0");
+    } else {
+      LedTurnOn(33);
+    }
 
-  LedTurnAllOff();
-
-  usleep(1000* 1000);
-
-  LedTurnAllOn();
-
-  usleep(1000* 1000);
-
-  LedTurnAllOff();
+    if (GpioGetValue(s_button) == 0) {
+      broadcastString("0","1");
+    } else {
+      LedTurnOn(28);
+    }
+    
+    usleep(100000); // 100ms
+  }
+  
 }
