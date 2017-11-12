@@ -5,6 +5,7 @@ var texLoaded = 0;
 var appData;
 var playerMovingForward = false;
 var playerMovingBackward = false;
+var lightOnTexture, lightOffTexture;
 
 function start() {
     setup();
@@ -16,6 +17,12 @@ function start() {
 
 function setup() {
     renderer = new Renderer();
+
+    (new PIXI.loaders.Loader())
+        .add('lightOn', resPath.lightOn)
+        .load(function (loader, res) {
+            lightOnTexture = res.lightOn.texture;
+        });
 
     appData = [
         {
@@ -56,14 +63,14 @@ function setup() {
             name: 'speaker1',
             path: resPath.speaker,
             pt: new PIXI.Point(0.45, 1.5),
-            scale: 2
+            scale: 1.5
         },
         {
             type: 'add',
             name: 'speaker2',
             path: resPath.speaker,
             pt: new PIXI.Point(0.05, 1.5),
-            scale: 2
+            scale: 1.5
         },
         {
             type: 'addSpine',
@@ -93,6 +100,14 @@ function run() {
     lightSwitch.interactive = true;
     lightSwitch.pointerdown = function () {
         renderer.editorFilter.uniforms.mode = renderer.editorFilter.uniforms.mode ^ 0x1;
+        if (renderer.editorFilter.uniforms.mode == 0) {
+            lightOnTexture = lightSwitch.texture;
+            lightSwitch.texture = lightOffTexture;
+        }
+        else {
+            lightOffTexture = lightSwitch.texture;
+            lightSwitch.texture = lightOnTexture;
+        }
     }
     
     let player = renderer.getElemByID('spineboy');

@@ -31,7 +31,7 @@ class Renderer {
                         float x = vTextureCoord.x;
                         float y = vTextureCoord.y;
                         vec4 pixel = texture2D(uSampler, vTextureCoord.xy);
-                        if (mode == 0.0) {
+                        if (mode == 1.0) {
                             gl_FragColor = pixel;
                         }
                         else {
@@ -40,7 +40,7 @@ class Renderer {
                         }
                     }`
                 );
-            this.editorFilter.uniforms.mode = 1.0;
+            this.editorFilter.uniforms.mode = 0.0;
             this.app.stage.filters = [this.editorFilter];
         }
     }
