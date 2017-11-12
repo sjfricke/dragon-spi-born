@@ -10,5 +10,7 @@
     lightSwitchOff: 'res/img/light_switch_off.png',
     speaker: 'res/img/speakers.png',
     window: 'res/img/window.png',
-    woodWall: 'res/img/wood_wall.jpg'
+    woodWall: 'res/img/wood_wall.jpg',
+    lightOff: 'res/img/light_switch_off.png',
+    lightOn: 'res/img/light_switch_on.png'
 }

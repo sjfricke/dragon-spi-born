@@ -24,6 +24,13 @@ function setup() {
         },
         {
             type: 'add',
+            name: 'switch',
+            path: resPath.lightOff,
+            pt: new PIXI.Point(0.7, 0.8),
+            scale: 2
+        },
+        {
+            type: 'add',
             name: 'fire',
             path: resPath.fire,
             pt: new PIXI.Point(0.9, 0.95),
