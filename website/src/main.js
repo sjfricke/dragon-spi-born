@@ -3,16 +3,13 @@ $(window).ready(start());
 var renderer;
 var texLoaded = 0;
 var appData;
-var playerMovingForward = false;
-var playerMovingBackward = false;
 var lightOnTexture, lightOffTexture;
 
 function start() {
     setup();
 
-    /*
     webSocket = new WebSocket('ws://' + location.host);
-	webSocket.onmessage = wsOnMessage;*/
+	webSocket.onmessage = wsOnMessage;
 }
 
 function setup() {
@@ -110,52 +107,11 @@ function run() {
 	speaker2StartY =  renderer.getElemByID('speaker2').position.y;
 
 
+    // player.interactive = true; // for clicking    
+    // lightSwitch.interactive = true; // for clicking
+
+    // Relayers to renderer
     for (var i = 0; i < appData.length; i++) {
         renderer.displayLayerByID(appData[i].name);
-    }
-    let lightSwitch = renderer.getElemByID('switch');
-    lightSwitch.interactive = true;
-    lightSwitch.pointerdown = function () {
-        renderer.editorFilter.uniforms.mode = renderer.editorFilter.uniforms.mode ^ 0x1;
-        if (renderer.editorFilter.uniforms.mode == 0) {
-            lightOnTexture = lightSwitch.texture;
-            lightSwitch.texture = lightOffTexture;
-        }
-        else {
-            lightOffTexture = lightSwitch.texture;
-            lightSwitch.texture = lightOnTexture;
-        }
-    }
-    
-    let player = renderer.getElemByID('spineboy');
-    player.interactive = true;
-    player.pointerdown = function () {
-        if (playerMovingForward == true || playerMovingBackward == true) {
-            // Currently performing action, so cannot stop
-            return;
-        }
-        playerMovingForward = true;
-        player.state.addAnimation(0, 'walk', true, 0);
-    }
-
-    renderer.app.ticker.add(function (delta) {
-
-        if (playerMovingForward) {
-            player.position.x += 2 * delta;
-            if (Math.abs(player.position.x - lightSwitch.position.x) < 20) {
-                playerMovingForward = false;
-                player.scale.x = -player.scale.x;
-                playerMovingBackward = true;
-                lightSwitch.pointerdown();
-            }
-        }
-        if (playerMovingBackward) {
-            player.position.x -= 2 * delta;
-            if (player.position.x < 150) {
-                playerMovingBackward = false;
-                player.scale.x = -player.scale.x;
-                player.state.addAnimation(0, 'walk', false, 0);
-            }
-        }
-    });
+    }    
 }

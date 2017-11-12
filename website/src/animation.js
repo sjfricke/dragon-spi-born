@@ -5,6 +5,9 @@ var speaker2StartY = 0;
 
 var speakerRate = 0.00004;
 
+var playerMovingForward = false;
+var playerMovingBackward = false;
+
 // renderer.app.ticker.add(speakersOn);
 function speakersOn(delta) {
 
@@ -63,3 +66,56 @@ function speakersOff() {
     	speaker2.position.y = speaker2StartY;       
     }
 }
+
+ function animateSpineBoy() {
+    if (playerMovingForward == true || playerMovingBackward == true) {
+        // Currently performing action, so cannot stop
+        return;
+    }
+    playerMovingForward = true;
+    renderer.getElemByID('spineboy').state.addAnimation(0, 'walk', true, 0);
+    renderer.app.ticker.add(walkSpineBoy);
+}
+
+function walkSpineBoy(delta) {
+
+    let player = renderer.getElemByID('spineboy');
+    let lightSwitch = renderer.getElemByID('switch');
+    
+    if (playerMovingForward) {
+        player.position.x += 2 * delta;
+        if (Math.abs(player.position.x - lightSwitch.position.x) < 20) {
+            playerMovingForward = false;
+            player.scale.x = -player.scale.x;
+            playerMovingBackward = true;
+            toggleLightSwitch();
+        }
+    }
+    if (playerMovingBackward) {
+        player.position.x -= 2 * delta;
+        if (player.position.x < 150) {
+            playerMovingBackward = false;
+            player.scale.x = -player.scale.x;
+            player.state.addAnimation(0, 'walk', false, 0);
+            renderer.app.ticker.remove(walkSpineBoy);
+        }
+    }
+}
+
+function toggleLightSwitch() {
+    let lightSwitch = renderer.getElemByID('switch');
+    renderer.editorFilter.uniforms.mode = renderer.editorFilter.uniforms.mode ^ 0x1;
+    if (renderer.editorFilter.uniforms.mode == 0) {
+        lightOnTexture = lightSwitch.texture;
+        lightSwitch.texture = lightOffTexture;
+        wsTurnLightsOff();
+    }
+    else {
+        lightOffTexture = lightSwitch.texture;
+        lightSwitch.texture = lightOnTexture;
+        wsTurnLightsOn();
+    }
+}
+    
+    
+
