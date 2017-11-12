@@ -17,7 +17,8 @@ class Renderer {
     doStuff() {
         var that = this;
         this.app.ticker.add(function (delta) {
-            that.getElemByID('fireplace').rotation += 0.1 * delta;
+            let sprite = that.getElemByID('fireplace');
+            sprite.x = (sprite.x + 2*delta) % 100;
         });
     }
 
@@ -38,7 +39,7 @@ class Renderer {
         if (container == null || !(container instanceof PIXI.Container)) {
             container = this.app.stage;
         }
-        let sprite = PIXI.Sprite.fromImage(imgPath);
+        let sprite = new PIXI.mesh.Plane(PIXI.Texture.fromImage(imgPath));
         this.elems[id] = sprite;
         sprite.position = pos;
         container.addChild(sprite);
@@ -123,10 +124,36 @@ class Renderer {
 
     getElemByID(id) {
         if (typeof id !== 'string') {
-            log('Renderer', 'Could not find element because ID (= %O) is not a string.', id);
             return null;
         }
         let found = this.elems[id];
         return (found !== undefined) ? found : null;
+    }
+
+    setPos(id, pos) {
+        if (!(pos instanceof PIXI.Point)) {
+            log('Renderer', 'Could not set position because pos (= %O) is not of type PIXI.Point.', pos);
+            return;
+        }
+        let elem = this.getElemByID(id);
+        if (elem == null) {
+            log('Renderer', 'Could not set position because no element with ID (= %O) was found.', id);
+            return;
+        }
+        elem.position = pos;
+    }
+
+    setPosByPercent(id, pos) {
+        if (!(pos instanceof PIXI.Point)) {
+            log('Renderer', 'Could not set position because pos (= %O) is not of type PIXI.Point.', pos);
+            return;
+        }
+        let elem = this.getElemByID(id);
+        if (elem == null) {
+            log('Renderer', 'Could not set position because no element with ID (= %O) was found.', id);
+            return;
+        }
+        elem.x = pos.x * elem.width;
+        elem.y = pos.y * elem.height;
     }
 }
