@@ -10,22 +10,12 @@ function wsOnMessage(event) {
 
   switch(parseInt(message.type)) {
     case 0:
-        if (message.value == 0) { 
-          // Run lights off animation
-	    setTimeout(function() {wsTurnLightsOff()}, 3000);
-//	    setTimeout(function() {startLightOffAnimation()}, 3000);
-           //log("TEST", "Run Lights off");
-        } else if (message.value == 1) { 
-            // Run lights on animation
-	    setTimeout(function() {wsTurnLightsOn()}, 3000);
-//	    setTimeout(function() {startLightOnAnimation()}, 3000);
-           //log("TEST", "Run Lights on");
-        }
+        animateSpineBoy();
       break;
     case 1:
         if (message.value == 0) { 
-            renderer.app.ticker.add(speakersOff);
-	    wsTurnSpeakersOff()
+          renderer.app.ticker.add(speakersOff);
+          wsTurnSpeakersOff()
         } else if (message.value == 1) { 
           renderer.app.ticker.add(speakersOn);
         }

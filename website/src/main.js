@@ -3,8 +3,6 @@ $(window).ready(start());
 var renderer;
 var texLoaded = 0;
 var appData;
-var playerMovingForward = false;
-var playerMovingBackward = false;
 var lightOnTexture, lightOffTexture;
 
 function start() {
@@ -139,58 +137,15 @@ function run() {
 	speaker1StartY =  renderer.getElemByID('speaker1').position.y;
 	speaker2StartY = renderer.getElemByID('speaker2').position.y;
     // Mask rain animation so it only shows behind window
-	let rain = renderer.getElemByID('rainAnimated')
+	let rain = renderer.getElemByID('rainAnimated');
 	rain.mask = renderer.getElemByID('sceneBounds');
 	rain.pivot.y = -rain.height / 2; // For rain rotation
 
+    // player.interactive = true; // for clicking    
+    // lightSwitch.interactive = true; // for clicking
+
+    // Relayers to renderer
     for (var i = 0; i < appData.length; i++) {
         renderer.displayLayerByID(appData[i].name);
     }
-    let lightSwitch = renderer.getElemByID('switch');
-    lightSwitch.interactive = true;
-    lightSwitch.pointerdown = function () {
-        renderer.editorFilter.uniforms.mode = renderer.editorFilter.uniforms.mode ^ 0x1;
-        if (renderer.editorFilter.uniforms.mode == 0) {
-            lightOnTexture = lightSwitch.texture;
-            lightSwitch.texture = lightOffTexture;
-        }
-        else {
-            lightOffTexture = lightSwitch.texture;
-            lightSwitch.texture = lightOnTexture;
-        }
-    }
-    
-    let player = renderer.getElemByID('spineboy');
-    player.interactive = true;
-    player.pointerdown = function () {
-        if (playerMovingForward == true || playerMovingBackward == true) {
-            // Currently performing action, so cannot stop
-            return;
-        }
-        playerMovingForward = true;
-        player.state.addAnimation(0, 'walk', true, 0);
-    }
-
-    renderer.app.ticker.add(function (delta) {
-        if (rain.rotation < 1) rain.rotation += 0.01;
-        else rain.rotation = -1;
-
-        if (playerMovingForward) {
-            player.position.x += 2 * delta;
-            if (Math.abs(player.position.x - lightSwitch.position.x) < 20) {
-                playerMovingForward = false;
-                player.scale.x = -player.scale.x;
-                playerMovingBackward = true;
-                lightSwitch.pointerdown();
-            }
-        }
-        if (playerMovingBackward) {
-            player.position.x -= 2 * delta;
-            if (player.position.x < 150) {
-                playerMovingBackward = false;
-                player.scale.x = -player.scale.x;
-                player.state.addAnimation(0, 'walk', false, 0);
-            }
-        }
-    });
 }
