@@ -40,7 +40,7 @@ class Renderer {
                         }
                     }`
                 );
-            this.editorFilter.uniforms.mode = 0.0;
+            this.editorFilter.uniforms.mode = 1.0;
             this.app.stage.filters = [this.editorFilter];
         }
     }
@@ -235,7 +235,7 @@ class Renderer {
         if (container == null || !(container instanceof PIXI.Container)) {
             container = this.app.stage;
         }
-        PIXI.loader
+        (new PIXI.loaders.Loader())
             .add(id, jsonPath)
             .load(onAssetsLoaded);
 

@@ -3,6 +3,8 @@ $(window).ready(start());
 var renderer;
 var texLoaded = 0;
 var appData;
+var playerMovingForward = false;
+var playerMovingBackward = false;
 
 function start() {
     setup();
@@ -92,6 +94,17 @@ function run() {
     lightSwitch.pointerdown = function () {
         renderer.editorFilter.uniforms.mode = renderer.editorFilter.uniforms.mode ^ 0x1;
     }
+    
+    let player = renderer.getElemByID('spineboy');
+    player.interactive = true;
+    player.pointerdown = function () {
+        if (playerMovingForward == true || playerMovingBackward == true) {
+            // Currently performing action, so cannot stop
+            return;
+        }
+        playerMovingForward = true;
+        player.state.addAnimation(0, 'walk', true, 0);
+    }
 
     let speaker1 = renderer.getElemByID('speaker1');
     let speaker2 = renderer.getElemByID('speaker2');
@@ -104,5 +117,23 @@ function run() {
             speaker2.position.y -= 0.000004 * speaker2.position.y * speaker2.position.y;
         }
         else speaker2.position.y = window.outerHeight;
+
+        if (playerMovingForward) {
+            player.position.x += 2 * delta;
+            if (Math.abs(player.position.x - lightSwitch.position.x) < 20) {
+                playerMovingForward = false;
+                player.scale.x = -1;
+                playerMovingBackward = true;
+                lightSwitch.pointerdown();
+            }
+        }
+        if (playerMovingBackward) {
+            player.position.x -= 2 * delta;
+            if (player.position.x < 500) {
+                playerMovingBackward = false;
+                player.scale.x = 1;
+                player.state.addAnimation(0, 'walk', false, 0);
+            }
+        }
     });
 }
