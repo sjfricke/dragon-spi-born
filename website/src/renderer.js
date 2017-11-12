@@ -87,7 +87,7 @@ class Renderer {
         }
     }
 
-    add(id, imgPath, pos, onload, containerID) {
+    add(id, imgPath, pos, onload, containerID, scale) {
         if (typeof id !== 'string' || this.testID(id)) {
             log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
             return;
@@ -113,6 +113,10 @@ class Renderer {
             that.elems[id].anchor.y = 1;
             that.elems[id].position.x = pos.x * window.outerWidth;
             that.elems[id].position.y = pos.y * window.outerHeight;
+            if (scale !== undefined && typeof scale === 'number' && scale > 0) {
+                that.elems[id].scale.x = scale;
+                that.elems[id].scale.y = scale;
+            }
             container.addChild(that.elems[id]);
             if (typeof onload === 'function') {
                 onload(id, that.elems[id]);
@@ -169,12 +173,20 @@ class Renderer {
             log('Renderer', 'Could not add because position (= %O) is not of type PIXI.Point.', pos);
             return;
         }
-        this.elems[id] = new PIXI.extras.TilingSprite(
-            PIXI.Texture.fromImage(imgPath),
-            this.app.renderer.width,
-            this.app.renderer.height
-        );
-        this.app.stage.addChild(this.elems[id]);
+        let loader = new PIXI.loaders.Loader();
+        loader.add(id, imgPath);
+        var that = this;
+        loader.load((loader, res) => {
+            that.elems[id] = new PIXI.extras.TilingSprite(
+                res[id].texture,
+                that.app.renderer.width,
+                that.app.renderer.height
+            );
+            that.app.stage.addChild(that.elems[id]);
+            if (typeof onload === 'function') {
+                onload(id, that.elems[id]);
+            }
+        });
     }
 
     addContainer(id, pos, containerID) {

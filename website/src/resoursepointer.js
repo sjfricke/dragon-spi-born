@@ -6,7 +6,7 @@
     houseBackground: 'res/img/house_background.png',
     kitchen: 'res/img/kitchen.png',
     lightSwitch: 'res/img/light_switch.png',
-    speakers: 'res/img/speakers.png',
+    speaker: 'res/img/speakers.png',
     window: 'res/img/window.png',
     woodWall: 'res/img/wood_wall.jpg'
 }
