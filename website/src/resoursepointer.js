@@ -15,5 +15,7 @@
     woodWall: 'res/img/wood_wall.jpg',
     lightOff: 'res/img/light_switch_off.png',
     lightOn: 'res/img/light_switch_on.png',
-    scene: 'res/img/scene.png'
+    scene: 'res/img/scene.png',
+    frame: 'res/img/frame.png',
+    picture: 'res/img/picture.png'
 }
