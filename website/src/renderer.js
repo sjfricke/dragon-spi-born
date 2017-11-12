@@ -42,6 +42,7 @@ class Renderer {
                 );
             this.editorFilter.uniforms.mode = 0.0;
             this.app.stage.filters = [this.editorFilter];
+
         }
     }
 
@@ -218,7 +219,9 @@ class Renderer {
             pos = data.pt,
             containerID = data.containerID,
             count = data.count,
-            scale = data.scale || 1;
+            framePrefix = data.framePrefix,
+            scale = data.scale || 1,
+            start = data.start || true;
         if (typeof id !== 'string' || this.testID(id)) {
             log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
             return;
@@ -246,7 +249,7 @@ class Renderer {
 
             // pass sprite size in code
             for (var i = 0; i < count; i++) {
-                 var texture = PIXI.Texture.fromFrame('Sequence_' + (i+1) + '.png');
+                 var texture = PIXI.Texture.fromFrame(framePrefix + 'Sequence_' + (i+1) + '.png');
                  animtedTextures.push(texture);
             }
 
@@ -258,7 +261,12 @@ class Renderer {
             that.elems[id].position.y = pos.y * window.outerHeight;
 
             that.elems[id].animationSpeed = 0.3;
-            that.elems[id].gotoAndPlay(0);
+
+            if (data.start) {                
+                that.elems[id].gotoAndPlay(0);
+            } else {
+                that.elems[id].gotoAndStop(0);
+            }
 
             if (scale !== undefined && typeof scale === 'number' && scale > 0) {
                 that.elems[id].scale.x = scale;

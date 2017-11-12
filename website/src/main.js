@@ -43,7 +43,9 @@ function setup() {
             name: 'fireAnimated',
             path: resPath.fireAnimated,
             pt: new PIXI.Point(0.9, 0.975),
-            count: 15
+            count: 15,
+            framePrefix : "fire",
+            start : true
         },
         {
             type: 'add',
@@ -59,19 +61,25 @@ function setup() {
             scale: 3
         },
         {
-            type: 'add',
+            type: 'addSpritesheet',
             name: 'speaker1',
-            path: resPath.speaker,
+            path: resPath.speakerAnimated,
             pt: new PIXI.Point(0.45, 1.5),
-            scale: 1.5
+            count: 6,
+            framePrefix : "speaker1",
+            scale: 1.5,
+            start : false
         },
         {
-            type: 'add',
+            type: 'addSpritesheet',
             name: 'speaker2',
-            path: resPath.speaker,
+            path: resPath.speakerAnimated,
             pt: new PIXI.Point(0.05, 1.5),
-            scale: 1.5
-        },
+            count: 6,
+            framePrefix : "speaker1",
+            scale: 1.5,
+            start : false
+        },	
         {
             type: 'addSpine',
             name: 'spineboy',
@@ -93,6 +101,12 @@ function loadedTex() {
 }
 
 function run() {
+
+	// need to set start to know how far to bring back down in future
+	speaker1StartY =  renderer.getElemByID('speaker1').position.y;
+	speaker2StartY =  renderer.getElemByID('speaker2').position.y;
+
+
     for (var i = 0; i < appData.length; i++) {
         renderer.displayLayerByID(appData[i].name);
     }
@@ -121,17 +135,7 @@ function run() {
         player.state.addAnimation(0, 'walk', true, 0);
     }
 
-    let speaker1 = renderer.getElemByID('speaker1');
-    let speaker2 = renderer.getElemByID('speaker2');
     renderer.app.ticker.add(function (delta) {
-        if (speaker1.position.y > window.outerHeight) {
-            speaker1.position.y -= 0.000004 * speaker1.position.y * speaker1.position.y;
-        }
-        else speaker1.position.y = window.outerHeight;
-        if (speaker2.position.y > window.outerHeight) {
-            speaker2.position.y -= 0.000004 * speaker2.position.y * speaker2.position.y;
-        }
-        else speaker2.position.y = window.outerHeight;
 
         if (playerMovingForward) {
             player.position.x += 2 * delta;
