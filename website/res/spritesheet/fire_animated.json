@@ -1,0 +1,130 @@
+{"frames": {
+
+"Fire_Seq 1.png":
+{
+    "frame": {"x":0,"y":0,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 10.png":
+{
+    "frame": {"x":784,"y":270,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 11.png":
+{
+    "frame": {"x":0,"y":540,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 12.png":
+{
+    "frame": {"x":196,"y":540,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 13.png":
+{
+    "frame": {"x":392,"y":540,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 14.png":
+{
+    "frame": {"x":588,"y":540,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 15.png":
+{
+    "frame": {"x":784,"y":540,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 2.png":
+{
+    "frame": {"x":196,"y":0,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 3.png":
+{
+    "frame": {"x":392,"y":0,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 4.png":
+{
+    "frame": {"x":588,"y":0,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 5.png":
+{
+    "frame": {"x":784,"y":0,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 6.png":
+{
+    "frame": {"x":0,"y":270,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 7.png":
+{
+    "frame": {"x":196,"y":270,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 8.png":
+{
+    "frame": {"x":392,"y":270,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+},
+"Fire_Seq 9.png":
+{
+    "frame": {"x":588,"y":270,"w":196,"h":270},
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": {"x":0,"y":0,"w":196,"h":270},
+    "sourceSize": {"w":196,"h":270}
+}},
+"meta": {
+    "version": "1.0",
+    "image": "fire_animated.png",
+    "format": "RGBA8888",
+    "size": {"w":980,"h":800},
+    "scale": "1"
+}
+}

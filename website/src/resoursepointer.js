@@ -2,6 +2,7 @@
     couch: 'res/img/couch.png',
     desk: 'res/img/desk.png',
     fire: 'res/img/fire.png',
+    fireAnimated: 'res/spritesheet/fire_animated.png',
     firePlace: 'res/img/fire_place.png',
     houseBackground: 'res/img/house_background.png',
     kitchen: 'res/img/kitchen.png',
