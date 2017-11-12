@@ -82,4 +82,7 @@ function loadedTex() {
 }
 
 function run() {
+    for (var i = 0; i < appData.length; i++) {
+        renderer.displayLayerByID(appData[i].name);
+    }
 }

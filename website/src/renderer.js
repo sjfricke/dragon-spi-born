@@ -39,8 +39,6 @@ class Renderer {
             // play animation
             spineBoy.state.setAnimation(0, 'walk', true);
 
-            that.app.stage.addChild(spineBoy);
-
             that.app.stage.on('pointerdown', function () {
                 spineBoy.state.setAnimation(0, 'jump', false);
                 spineBoy.state.addAnimation(0, 'walk', true, 0);
@@ -52,7 +50,7 @@ class Renderer {
         }
     }
 
-    addSpine(id, jsonPath, pos, onload, containerID) {
+    addSpine(id, jsonPath, pos, onload, containerID, scale) {
         if (typeof id !== 'string' || this.testID(id)) {
             log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
             return;
@@ -80,7 +78,10 @@ class Renderer {
             that.elems[id].x = pos.x;
             that.elems[id].y = pos.y;
 
-            container.addChild(that.elems[id]);
+            if (scale !== undefined && typeof scale === 'number' && scale > 0) {
+                that.elems[id].scale.x = scale;
+                that.elems[id].scale.y = scale;
+            }
             if (typeof onload === 'function') {
                 onload(id, that.elems[id]);
             }
@@ -117,7 +118,6 @@ class Renderer {
                 that.elems[id].scale.x = scale;
                 that.elems[id].scale.y = scale;
             }
-            container.addChild(that.elems[id]);
             if (typeof onload === 'function') {
                 onload(id, that.elems[id]);
             }
@@ -153,7 +153,6 @@ class Renderer {
                     layerNum, container.children.length - 1);
                 return;
             }
-            container.addChildAt(that.elems[id], layerNum);
             if (typeof onload === 'function') {
                 onload(id, that.elems[id]);
             }
@@ -182,7 +181,6 @@ class Renderer {
                 that.app.renderer.width,
                 that.app.renderer.height
             );
-            that.app.stage.addChild(that.elems[id]);
             if (typeof onload === 'function') {
                 onload(id, that.elems[id]);
             }
@@ -205,7 +203,6 @@ class Renderer {
         let elem = new PIXI.Container();
         this.elems[id] = elem;
         elem.position = pos;
-        container.addChild(elem);
     }
 
     addContainerAt(id, pos, layerNum, containerID) {
@@ -230,7 +227,6 @@ class Renderer {
                 layerNum, container.children.length - 1);
             return;
         }
-        container.addChildAt(elem, layerNum);
     }
 
     testID(id) {
@@ -279,5 +275,14 @@ class Renderer {
         let w = elem.parent.width, h = elem.parent.height;
         elem.x = pos.x * w;
         elem.y = pos.y * h;
+    }
+
+    displayLayerByID(id) {
+        let layer = this.getElemByID(id);
+        if (layer == null) {
+            log('Renderer', 'Could not display layer because  ID (= %O) was not found.', id);
+            return;
+        }
+        this.app.stage.addChild(layer);
     }
 }
