@@ -3,12 +3,39 @@ $(window).ready(run());
 var renderer;
 
 function run() {
-    renderer = new Renderer();
-    renderer.addContainer('fireplace', new PIXI.Point(0, 0));
-    renderer.add('fire', resPath.fire, new PIXI.Point(40, 0), 'fireplace');
-    renderer.add('firePlace', resPath.firePlace, new PIXI.Point(100, 0), 'fireplace');
-    renderer.setPosByPercent('fire', new PIXI.Point(0.5, 0));
+    var app = new PIXI.Application();
+    document.body.appendChild(app.view);
 
-    webSocket = new WebSocket('ws://' + location.host);
-	webSocket.onmessage = wsOnMessage;
+    // load spine data
+    PIXI.loader
+        .add('spineboy', 'res/json/spineboy.json')
+        .load(onAssetsLoaded);
+
+    app.stage.interactive = true;
+
+    function onAssetsLoaded(loader, res) {
+        // create a spine boy
+        var spineBoy = new PIXI.spine.Spine(res.spineboy.spineData);
+
+        // set the position
+        spineBoy.x = app.renderer.width / 2;
+        spineBoy.y = app.renderer.height;
+
+        spineBoy.scale.set(1.5);
+
+        // set up the mixes!
+        spineBoy.stateData.setMix('walk', 'jump', 0.2);
+        spineBoy.stateData.setMix('jump', 'walk', 0.4);
+
+        // play animation
+        spineBoy.state.setAnimation(0, 'walk', true);
+
+        app.stage.addChild(spineBoy);
+
+        app.stage.on('pointerdown', function () {
+            spineBoy.state.setAnimation(0, 'jump', false);
+            spineBoy.state.addAnimation(0, 'walk', true, 0);
+        });
+    }
+
 }
