@@ -12,10 +12,14 @@ function wsOnMessage(event) {
     case 0:
         if (message.value == 0) { 
           // Run lights off animation
-          log("TEST", "Run Lights off");
+	    setTimeout(function() {wsTurnLightsOff()}, 3000);
+//	    setTimeout(function() {startLightOffAnimation()}, 3000);
+           //log("TEST", "Run Lights off");
         } else if (message.value == 1) { 
-          // Run lights on animation
-          log("TEST", "Run Lights on");
+            // Run lights on animation
+	    setTimeout(function() {wsTurnLightsOn()}, 3000);
+//	    setTimeout(function() {startLightOnAnimation()}, 3000);
+           //log("TEST", "Run Lights on");
         }
       break;
     default:

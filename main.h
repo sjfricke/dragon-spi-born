@@ -7,8 +7,4 @@
 
 void webData( int type, char* value);
 
-void animationStatus( char* status);
-
-void updateLED( char* rgb );
-
-void takePhoto( void );
+void changeLights( int value );
