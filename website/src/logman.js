@@ -1,4 +1,4 @@
-﻿var myconsole = {
+﻿const myconsole = {
     log: console.log,
     warn: console.warn,
     error: console.error
