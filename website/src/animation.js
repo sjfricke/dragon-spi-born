@@ -3,6 +3,10 @@ var speaker2Ready = false;
 var speaker1StartY = 0;
 var speaker2StartY = 0;
 
+var rainAnim = false;
+var rainAnimSpd = 2;
+var rot = 0;
+
 var speakerRate = 0.00004;
 
 var playerMovingForward = false;
@@ -81,10 +85,6 @@ function walkSpineBoy(delta) {
 
     let player = renderer.getElemByID('spineboy');
     let lightSwitch = renderer.getElemByID('switch');
-    let rain = renderer.getElemByID('rainAnimated');
-        
-    if (rain.rotation < 1) rain.rotation += 0.01;
-    else rain.rotation = -1;
 
     if (playerMovingForward) {
         player.position.x += 2 * delta;
@@ -121,4 +121,23 @@ function toggleLightSwitch() {
     }
 }
     
-function animateRain();
+function animateRain() {
+    if (!rainAnim) {
+        renderer.app.ticker.add(rainAnimFrame);
+        rainAnim = true;
+    }
+}
+function rainAnimFrame() {
+    let rain = renderer.getElemByID('rainAnimated');
+    let x = rot;
+    if (rot > 1) x = 2 - rot;
+    if (rot > 2) {
+        rot = 0;
+        renderer.app.ticker.remove(rainAnimFrame);
+        rainAnim = false;
+    }
+    else {
+        rain.rotation = -1 * x * x + 2 * x;
+        rot += 0.01 * rainAnimSpd;
+    }
+}

@@ -33,21 +33,21 @@ function setup() {
             type: 'add',
             name: 'sceneBounds',
             path: resPath.scene,
-            pt: new PIXI.Point(0.25, 0.75),
+            pt: new PIXI.Point(0.25, 0.65),
             scale: 1.3
         },
         {
             type: 'add',
             name: 'scene',
             path: resPath.scene,
-            pt: new PIXI.Point(0.25, 0.75),
+            pt: new PIXI.Point(0.25, 0.65),
             scale: 1.3
         },
         {
             type: 'addSpritesheet',
             name: 'rainAnimated',
             path: resPath.rainAnimated,
-            pt: new PIXI.Point(0.25, 0.6),
+            pt: new PIXI.Point(0.25, 0.5),
             count: 15,
             framePrefix: "rain",
             start: true,
@@ -57,7 +57,7 @@ function setup() {
             type: 'add',
             name: 'window',
             path: resPath.window,
-            pt: new PIXI.Point(0.25, 0.75),
+            pt: new PIXI.Point(0.25, 0.65),
             scale: 1.3
         },
         {
