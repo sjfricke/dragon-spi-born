@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Werror -c
 OBJ_SERVER = server/util.o server/server.o server/websocket.o server/http.o server/sha1.o server/base64.o
-OBJ_HW = hardware/i2c.o hardware/gpio.o hardware/led.o
+OBJ_HW = hardware/i2c.o hardware/gpio.o hardware/led.o hardware/accel.o
 SHARED = -lpthread
 
 main: hardware server

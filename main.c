@@ -107,7 +107,9 @@ int main ( int argc, char* argv[] ) {
   while(1) {
 
     AccelGetValue(&accel_x, &accel_y, &accel_z);
-    printf("Acceleration: x = %f y = %f z = %f\n\n", accel_x, accel_y, accel_z );
+    if (accel_x > 1.4 || accel_x < -1.4) {	
+      broadcastString("2":"0");
+    }
     
     if (GpioGetValue(s_touch) == 1) {
       broadcastString("0","0");

@@ -20,6 +20,9 @@ function wsOnMessage(event) {
           renderer.app.ticker.add(speakersOn);
         }
       break;
+    case 2:
+      animateRain();
+      break;
     default:
   	  warn("WebSocket", "No case for data: %0", message);
   }

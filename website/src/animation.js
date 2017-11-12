@@ -117,5 +117,4 @@ function toggleLightSwitch() {
     }
 }
     
-    
-
+function animateRain();
