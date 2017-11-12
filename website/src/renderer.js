@@ -260,7 +260,7 @@ class Renderer {
             that.elems[id].position.x = pos.x * window.outerWidth;
             that.elems[id].position.y = pos.y * window.outerHeight;
 
-            that.elems[id].animationSpeed = 0.3;
+            that.elems[id].animationSpeed = 0.17;
 
             if (data.start) {                
                 that.elems[id].gotoAndPlay(0);
