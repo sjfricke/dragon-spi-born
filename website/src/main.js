@@ -1,41 +1,69 @@
-$(window).ready(run());
+$(window).ready(start());
 
 var renderer;
+var texLoaded = 0;
+var appData;
+
+function start() {
+    setup();
+
+    /*
+    webSocket = new WebSocket('ws://' + location.host);
+	webSocket.onmessage = wsOnMessage;*/
+}
+
+function setup() {
+    renderer = new Renderer();
+
+    appData = [
+        {
+            type: 'add',
+            name: 'fire',
+            path: resPath.fire,
+            pt: new PIXI.Point(0.9, 1),
+        },
+        {
+            type: 'add',
+            name: 'firePlace',
+            path: resPath.firePlace,
+            pt: new PIXI.Point(0.9, 1),
+        },
+        {
+            type: 'addSpine',
+            name: 'spineboy',
+            path: 'res/json/spineboy.json',
+            pt: new PIXI.Point(renderer.getW() / 2, renderer.getH())
+        },
+        {
+            type: 'add',
+            name: 'couch',
+            path: resPath.kitchen,
+            pt: new PIXI.Point(0, 0)
+        },
+        {
+            type: 'addTile',
+            name: 'woodwall',
+            path: resPath.woodWall,
+            pt: new PIXI.Point(0, 0)
+        }
+    ];
+
+    // Load all app data async
+    for (var i = 0; i < appData.length; i++) {
+        renderer[appData[i].type](
+            appData[i].name,
+            appData[i].path,
+            appData[i].pt,
+            loadedTex,
+            appData[i].container);
+    }
+}
+
+function loadedTex() {
+    // onload
+    texLoaded++;
+    if (texLoaded >= appData.length) run();
+}
 
 function run() {
-    var app = new PIXI.Application();
-    document.body.appendChild(app.view);
-
-    // load spine data
-    PIXI.loader
-        .add('spineboy', 'res/json/spineboy.json')
-        .load(onAssetsLoaded);
-
-    app.stage.interactive = true;
-
-    function onAssetsLoaded(loader, res) {
-        // create a spine boy
-        var spineBoy = new PIXI.spine.Spine(res.spineboy.spineData);
-
-        // set the position
-        spineBoy.x = app.renderer.width / 2;
-        spineBoy.y = app.renderer.height;
-
-        spineBoy.scale.set(1.5);
-
-        // set up the mixes!
-        spineBoy.stateData.setMix('walk', 'jump', 0.2);
-        spineBoy.stateData.setMix('jump', 'walk', 0.4);
-
-        // play animation
-        spineBoy.state.setAnimation(0, 'walk', true);
-
-        app.stage.addChild(spineBoy);
-
-        app.stage.on('pointerdown', function () {
-            spineBoy.state.setAnimation(0, 'jump', false);
-            spineBoy.state.addAnimation(0, 'walk', true, 0);
-        });
-    }
-
 }

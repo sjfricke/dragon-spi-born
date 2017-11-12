@@ -7,5 +7,6 @@
     kitchen: 'res/img/kitchen.png',
     lightSwitch: 'res/img/light_switch.png',
     speakers: 'res/img/speakers.png',
-    window: 'res/img/window.png'
+    window: 'res/img/window.png',
+    woodWall: 'res/img/wood_wall.jpg'
 }
