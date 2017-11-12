@@ -81,7 +81,11 @@ function walkSpineBoy(delta) {
 
     let player = renderer.getElemByID('spineboy');
     let lightSwitch = renderer.getElemByID('switch');
-    
+    let rain = renderer.getElemByID('rainAnimated');
+        
+    if (rain.rotation < 1) rain.rotation += 0.01;
+    else rain.rotation = -1;
+
     if (playerMovingForward) {
         player.position.x += 2 * delta;
         if (Math.abs(player.position.x - lightSwitch.position.x) < 20) {

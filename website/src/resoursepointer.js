@@ -10,8 +10,10 @@
     lightSwitchOff: 'res/img/light_switch_off.png',
     speaker: 'res/img/speakers.png',
     speakerAnimated: 'res/spritesheet/speaker_animated.json',
+    rainAnimated: 'res/spritesheet/rain_animated.json',
     window: 'res/img/window.png',
     woodWall: 'res/img/wood_wall.jpg',
     lightOff: 'res/img/light_switch_off.png',
-    lightOn: 'res/img/light_switch_on.png'
+    lightOn: 'res/img/light_switch_on.png',
+    scene: 'res/img/scene.png'
 }
