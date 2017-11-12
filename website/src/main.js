@@ -1,14 +1,85 @@
-$(window).ready(run());
+$(window).ready(start());
 
 var renderer;
+var texLoaded = 0;
+var appData;
+
+function start() {
+    setup();
+
+    /*
+    webSocket = new WebSocket('ws://' + location.host);
+	webSocket.onmessage = wsOnMessage;*/
+}
+
+function setup() {
+    renderer = new Renderer();
+
+    appData = [
+        {
+            type: 'addTile',
+            name: 'woodwall',
+            path: resPath.woodWall,
+            pt: new PIXI.Point(0, 0)
+        },
+        {
+            type: 'add',
+            name: 'fire',
+            path: resPath.fire,
+            pt: new PIXI.Point(0.9, 0.95),
+        },
+        {
+            type: 'add',
+            name: 'firePlace',
+            path: resPath.firePlace,
+            pt: new PIXI.Point(0.9, 1),
+        },
+        {
+            type: 'add',
+            name: 'couch',
+            path: resPath.couch,
+            pt: new PIXI.Point(0.25, 1),
+            scale: 3
+        },
+        {
+            type: 'add',
+            name: 'speaker1',
+            path: resPath.speaker,
+            pt: new PIXI.Point(0.25, 1),
+            scale: 2
+        },
+        {
+            type: 'add',
+            name: 'speaker2',
+            path: resPath.speaker,
+            pt: new PIXI.Point(0.25, 1),
+            scale: 2
+        },
+        {
+            type: 'addSpine',
+            name: 'spineboy',
+            path: 'res/json/spineboy.json',
+            pt: new PIXI.Point(renderer.getW() / 2, renderer.getH())
+        }
+    ];
+
+    // Load all app data async
+    for (var i = 0; i < appData.length; i++) {
+        renderer[appData[i].type](
+            appData[i].name,
+            appData[i].path,
+            appData[i].pt,
+            loadedTex,
+            appData[i].container,
+            appData[i].scale);
+    }
+}
+
+function loadedTex() {
+    // onload
+    texLoaded++;
+    if (texLoaded >= appData.length) run();
+}
 
 function run() {
-    renderer = new Renderer();
-    renderer.addContainer('fireplace', new PIXI.Point(0, 0));
-    renderer.add('fire', resPath.fire, new PIXI.Point(40, 0), 'fireplace');
-    renderer.add('firePlace', resPath.firePlace, new PIXI.Point(100, 0), 'fireplace');
-    renderer.setPosByPercent('fire', new PIXI.Point(0.5, 0));
-
-    webSocket = new WebSocket('ws://' + location.host);
-	webSocket.onmessage = wsOnMessage;
 }
