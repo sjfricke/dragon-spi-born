@@ -32,7 +32,8 @@ class Renderer {
                         float y = vTextureCoord.y;
                         vec4 pixel = texture2D(uSampler, vTextureCoord.xy);
                         if (mode == 1.0
-                            || (x < 0.2605 && x > 0.1382 && y < 0.603 && y > 0.3232)) {
+                            || (((x < 0.192 && x > 0.1382) || (x < 0.2605 && x > 0.205))
+                            && ((y < 0.45996 && y > 0.3232) || (y < 0.603 && y > 0.4718)))) {
                             gl_FragColor = pixel;
                         }
                         else {
