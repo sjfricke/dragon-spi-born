@@ -3,6 +3,7 @@ var speaker2Ready = false;
 var speaker1StartY = 0;
 var speaker2StartY = 0;
 
+var speakerRate = 0.00004;
 
 // renderer.app.ticker.add(speakersOn);
 function speakersOn(delta) {
@@ -14,18 +15,19 @@ function speakersOn(delta) {
 		speaker1.play();
 		speaker2.play();
 		log("animation", "done with speaker on");
-		renderer.app.ticker.remove(speakersOn);
+	        renderer.app.ticker.remove(speakersOn);
+	wsTurnSpeakersOn();
 	}
 
     if (speaker1.position.y > window.outerHeight * 1.05) {
-        speaker1.position.y -= 0.000004 * speaker1.position.y * speaker1.position.y;
+        speaker1.position.y -= speakerRate * speaker1.position.y * speaker1.position.y;
     } else {
     	speaker1Ready = true;
     	speaker1.position.y = window.outerHeight * 1.05;
     }
 
     if (speaker2.position.y > window.outerHeight  * 1.05) {
-        speaker2.position.y -= 0.000004 * speaker2.position.y * speaker2.position.y;
+        speaker2.position.y -= speakerRate * speaker2.position.y * speaker2.position.y;
     }
     else { 
     	speaker2Ready = true;
@@ -47,14 +49,14 @@ function speakersOff() {
 	}
 
     if (speaker1.position.y < speaker1StartY) {
-        speaker1.position.y += 0.000004 * speaker1.position.y * speaker1.position.y;
+        speaker1.position.y += speakerRate * speaker1.position.y * speaker1.position.y;
     } else {
     	speaker1Ready = false;
     	speaker1.position.y = speaker1StartY;
     }
 
     if (speaker2.position.y < speaker2StartY) {
-        speaker2.position.y += 0.000004 * speaker2.position.y * speaker2.position.y;
+        speaker2.position.y += speakerRate * speaker2.position.y * speaker2.position.y;
     }
     else { 
     	speaker2Ready = false;

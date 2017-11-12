@@ -10,9 +10,9 @@ var lightOnTexture, lightOffTexture;
 function start() {
     setup();
 
-    /*
+    
     webSocket = new WebSocket('ws://' + location.host);
-	webSocket.onmessage = wsOnMessage;*/
+	webSocket.onmessage = wsOnMessage;
 }
 
 function setup() {

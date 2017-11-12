@@ -24,7 +24,8 @@ function wsOnMessage(event) {
       break;
     case 1:
         if (message.value == 0) { 
-          renderer.app.ticker.add(speakersOff);
+            renderer.app.ticker.add(speakersOff);
+	    wsTurnSpeakersOff()
         } else if (message.value == 1) { 
           renderer.app.ticker.add(speakersOn);
         }
