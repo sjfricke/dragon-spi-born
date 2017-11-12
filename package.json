@@ -17,11 +17,8 @@
   },
   "homepage": "https://github.com/sjfricke/dragon-spi-born#readme",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "express-ws": "^3.0.0",
-    "morgan": "^1.9.0",
     "ws": "^3.3.1"
   }
 }
