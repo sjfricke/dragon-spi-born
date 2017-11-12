@@ -1,4 +1,4 @@
-﻿var resPath = {
+﻿const resPath = {
     couch: 'res/img/couch.png',
     desk: 'res/img/desk.png',
     fire: 'res/img/fire.png',
