@@ -6,10 +6,17 @@ var appData;
 var lightOnTexture, lightOffTexture;
 
 function start() {
+    setWebSocket();
     setup();
+}
 
-    webSocket = new WebSocket('ws://' + location.host);
+function setWebSocket() {
+    try {
+	webSocket = new WebSocket('ws://' + location.host);
 	webSocket.onmessage = wsOnMessage;
+    } catch (e) {
+	location.reload();
+    }
 }
 
 function setup() {
