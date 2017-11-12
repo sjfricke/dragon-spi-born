@@ -23,16 +23,17 @@ function setup() {
             pt: new PIXI.Point(0, 0)
         },
         {
-            type: 'add',
-            name: 'fire',
-            path: resPath.fire,
-            pt: new PIXI.Point(0.9, 0.95),
+            type: 'addSpritesheet',
+            name: 'fireAnimated',
+            path: resPath.fireAnimated,
+            pt: new PIXI.Point(0.9, 0.975),
+            count: 15
         },
         {
             type: 'add',
             name: 'firePlace',
             path: resPath.firePlace,
-            pt: new PIXI.Point(0.9, 1),
+            pt: new PIXI.Point(0.9, 1)
         },
         {
             type: 'add',

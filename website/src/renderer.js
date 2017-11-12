@@ -178,6 +178,68 @@ class Renderer {
         });
     }
 
+    addSpritesheet(data, onload) {
+        if (data === undefined || typeof data !== 'object') {
+            log('Renderer', 'Could not add because data (= %O) is invalid.', data);
+            return;
+        }
+        let id = data.name,
+            jsonPath = data.path,
+            pos = data.pt,
+            containerID = data.containerID,
+            count = data.count,
+            scale = data.scale || 1;
+        if (typeof id !== 'string' || this.testID(id)) {
+            log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
+            return;
+        }
+        if (typeof jsonPath !== 'string') {
+            log('Renderer', 'Could not add because jsonPath (= %O) is not of a string.', jsonPath);
+            return;
+        }
+        if (!(pos instanceof PIXI.Point)) {
+            log('Renderer', 'Could not add because position (= %O) is not of type PIXI.Point.', pos);
+            return;
+        }
+        var container = this.getElemByID(containerID);
+        if (container == null || !(container instanceof PIXI.Container)) {
+            container = this.app.stage;
+        }
+        PIXI.loader
+            .add(id, jsonPath)
+            .load(onAssetsLoaded);
+
+        var that = this;
+        function onAssetsLoaded(loader, res) {
+           
+           var animtedTextures = [];
+
+            // pass sprite size in code
+            for (var i = 0; i < count; i++) {
+                 var texture = PIXI.Texture.fromFrame('Sequence_' + (i+1) + '.png');
+                 animtedTextures.push(texture);
+            }
+
+            that.elems[id] = new PIXI.extras.AnimatedSprite(animtedTextures);
+
+            that.elems[id].anchor.x = 0.5;
+            that.elems[id].anchor.y = 1;
+            that.elems[id].position.x = pos.x * window.outerWidth;
+            that.elems[id].position.y = pos.y * window.outerHeight;
+
+            that.elems[id].animationSpeed = 0.3;
+            that.elems[id].gotoAndPlay(0);
+
+            if (scale !== undefined && typeof scale === 'number' && scale > 0) {
+                that.elems[id].scale.x = scale;
+                that.elems[id].scale.y = scale;
+            }
+            if (typeof onload === 'function') {
+                onload(id, that.elems[id]);
+            }
+        }
+    }
+
     testID(id) {
         return this.getElemByID(id) != null;
     }
