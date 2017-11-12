@@ -45,14 +45,14 @@ function setup() {
             type: 'add',
             name: 'speaker1',
             path: resPath.speaker,
-            pt: new PIXI.Point(0.25, 1),
+            pt: new PIXI.Point(0.45, 1),
             scale: 2
         },
         {
             type: 'add',
             name: 'speaker2',
             path: resPath.speaker,
-            pt: new PIXI.Point(0.25, 1),
+            pt: new PIXI.Point(0.05, 1),
             scale: 2
         },
         {
@@ -65,13 +65,7 @@ function setup() {
 
     // Load all app data async
     for (var i = 0; i < appData.length; i++) {
-        renderer[appData[i].type](
-            appData[i].name,
-            appData[i].path,
-            appData[i].pt,
-            loadedTex,
-            appData[i].container,
-            appData[i].scale);
+        renderer[appData[i].type](appData[i], loadedTex);
     }
 }
 

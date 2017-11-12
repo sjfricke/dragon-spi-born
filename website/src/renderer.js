@@ -50,7 +50,16 @@ class Renderer {
         }
     }
 
-    addSpine(id, jsonPath, pos, onload, containerID, scale) {
+    addSpine(data, onload) {
+        if (data === undefined || typeof data !== 'object') {
+            log('Renderer', 'Could not add because data (= %O) is invalid.', data);
+            return;
+        }
+        let id = data.name,
+            jsonPath = data.path,
+            pos = data.pt,
+            containerID = data.containerID,
+            scale = data.scale;
         if (typeof id !== 'string' || this.testID(id)) {
             log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
             return;
@@ -88,7 +97,16 @@ class Renderer {
         }
     }
 
-    add(id, imgPath, pos, onload, containerID, scale) {
+    add(data, onload) {
+        if (data === undefined || typeof data !== 'object') {
+            log('Renderer', 'Could not add because data (= %O) is invalid.', data);
+            return;
+        }
+        let id = data.name,
+            imgPath = data.path,
+            pos = data.pt,
+            containerID = data.containerID,
+            scale = data.scale;
         if (typeof id !== 'string' || this.testID(id)) {
             log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
             return;
@@ -124,42 +142,15 @@ class Renderer {
         });
     }
 
-    addAt(id, imgPath, pos, onload, layerNum, containerID) {
-        if (typeof id !== 'string' || this.testID(id)) {
-            log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
+    addTile(data, onload) {
+        if (data === undefined || typeof data !== 'object') {
+            log('Renderer', 'Could not add because data (= %O) is invalid.', data);
             return;
         }
-        if (typeof imgPath !== 'string') {
-            log('Renderer', 'Could not add because imgPath (= %O) is not of a string.', imgPath);
-            return;
-        }
-        if (!(pos instanceof PIXI.Point)) {
-            log('Renderer', 'Could not add because position (= %O) is not of type PIXI.Point.', pos);
-            return;
-        }
-        let container = this.getElemByID(containerID);
-        if (container == null || !(container instanceof PIXI.Container)) {
-            container = this.app.stage;
-        }
-        let loader = new PIXI.loaders.Loader();
-        loader.add(id, imgPath);
-        var that = this;
-        loader.load((loader, res) => {
-            that.elems[id] = new PIXI.mesh.Plane(res[id].texture);
-            that.elems[id].position = pos;
-            if (typeof layerNum !== 'number'
-                || layerNum < 0 || layerNum >= container.children.length) {
-                log('Renderer', 'Could not add because layerNum (= %O) is not within [0, %i].',
-                    layerNum, container.children.length - 1);
-                return;
-            }
-            if (typeof onload === 'function') {
-                onload(id, that.elems[id]);
-            }
-        });
-    }
-
-    addTile(id, imgPath, pos, onload, containerID) {
+        let id = data.name,
+            imgPath = data.path,
+            pos = data.pt,
+            containerID = data.containerID;
         if (typeof id !== 'string' || this.testID(id)) {
             log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
             return;
@@ -185,48 +176,6 @@ class Renderer {
                 onload(id, that.elems[id]);
             }
         });
-    }
-
-    addContainer(id, pos, containerID) {
-        if (typeof id !== 'string' || this.testID(id)) {
-            log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
-            return;
-        }
-        if (!(pos instanceof PIXI.Point)) {
-            log('Renderer', 'Could not add because position (= %O) is not of type PIXI.Point.', pos);
-            return;
-        }
-        let container = this.getElemByID(containerID);
-        if (container == null || !(container instanceof PIXI.Container)) {
-            container = this.app.stage;
-        }
-        let elem = new PIXI.Container();
-        this.elems[id] = elem;
-        elem.position = pos;
-    }
-
-    addContainerAt(id, pos, layerNum, containerID) {
-        if (typeof id !== 'string' || this.testID(id)) {
-            log('Renderer', 'Could not add because ID (= %O) is already in use.', id);
-            return;
-        }
-        if (!(pos instanceof PIXI.Point)) {
-            log('Renderer', 'Could not add because position (= %O) is not of type PIXI.Point.', pos);
-            return;
-        }
-        let container = this.getElemByID(containerID);
-        if (container == null || !(container instanceof PIXI.Container)) {
-            container = this.app.stage;
-        }
-        let elem = new PIXI.Container();
-        this.elems[id] = elem;
-        elem.position = pos;
-        if (typeof layerNum !== 'number'
-            || layerNum < 0 || layerNum >= container.children.length) {
-            log('Renderer', 'Could not add because layerNum (= %O) is not within [0, %i].',
-                layerNum, container.children.length - 1);
-            return;
-        }
     }
 
     testID(id) {
