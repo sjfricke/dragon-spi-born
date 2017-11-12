@@ -10,9 +10,9 @@ var lightOnTexture, lightOffTexture;
 function start() {
     setup();
 
-    
+    /*
     webSocket = new WebSocket('ws://' + location.host);
-	webSocket.onmessage = wsOnMessage;
+	webSocket.onmessage = wsOnMessage;*/
 }
 
 function setup() {
@@ -29,14 +29,14 @@ function setup() {
             type: 'addTile',
             name: 'woodwall',
             path: resPath.woodWall,
-            pt: new PIXI.Point(0, 0)
+            pt: new PIXI.Point(0, 0),
+            scale: 0.5
         },
         {
             type: 'add',
             name: 'switch',
             path: resPath.lightOff,
-            pt: new PIXI.Point(0.7, 0.8),
-            scale: 2
+            pt: new PIXI.Point(0.7, 0.8)
         },
         {           
             type: 'addSpritesheet',
@@ -45,20 +45,22 @@ function setup() {
             pt: new PIXI.Point(0.9, 0.975),
             count: 15,
             framePrefix : "fire",
-            start : true
+            start: true,
+            scale: 0.5
         },
         {
             type: 'add',
             name: 'firePlace',
             path: resPath.firePlace,
-            pt: new PIXI.Point(0.9, 1)
+            pt: new PIXI.Point(0.9, 1),
+            scale: 0.5
         },
         {
             type: 'add',
             name: 'couch',
             path: resPath.couch,
             pt: new PIXI.Point(0.25, 1),
-            scale: 3
+            scale: 1.5
         },
         {
             type: 'addSpritesheet',
@@ -67,7 +69,7 @@ function setup() {
             pt: new PIXI.Point(0.45, 1.5),
             count: 6,
             framePrefix : "speaker1",
-            scale: 1.5,
+            scale: 0.75,
             start : false
         },
         {
@@ -77,14 +79,15 @@ function setup() {
             pt: new PIXI.Point(0.05, 1.5),
             count: 6,
             framePrefix : "speaker1",
-            scale: 1.5,
+            scale: 0.75,
             start : false
         },	
         {
             type: 'addSpine',
             name: 'spineboy',
             path: 'res/json/spineboy.json',
-            pt: new PIXI.Point(renderer.getW() / 2, renderer.getH())
+            pt: new PIXI.Point(renderer.getW() / 2, renderer.getH()),
+            scale: 0.5
         }
     ];
 
@@ -141,16 +144,16 @@ function run() {
             player.position.x += 2 * delta;
             if (Math.abs(player.position.x - lightSwitch.position.x) < 20) {
                 playerMovingForward = false;
-                player.scale.x = -1;
+                player.scale.x = -player.scale.x;
                 playerMovingBackward = true;
                 lightSwitch.pointerdown();
             }
         }
         if (playerMovingBackward) {
             player.position.x -= 2 * delta;
-            if (player.position.x < 500) {
+            if (player.position.x < 150) {
                 playerMovingBackward = false;
-                player.scale.x = 1;
+                player.scale.x = -player.scale.x;
                 player.state.addAnimation(0, 'walk', false, 0);
             }
         }
