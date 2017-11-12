@@ -26,13 +26,11 @@ void killAudio(){
     pid = atoi(path);
   }
 
-
   sprintf(command, "kill -9 %d", pid);
   system(command);
   
   /* close */
   pclose(fp);
-
 }
 
 void webData( int type, char* value) {
@@ -94,17 +92,18 @@ int main ( int argc, char* argv[] ) {
   s_button =  GpioDB410cMapping(24);
   GpioEnablePin(s_button);
   GpioSetDirection(s_button, INPUT_PIN);
-
+ 
   s_touch =  GpioDB410cMapping(23);
   GpioEnablePin(s_touch);
   GpioSetDirection(s_touch, INPUT_PIN);
   
   LedSetup();
-
+  LedTurnAllOff();
+  
   while(1) {
 
     if (GpioGetValue(s_touch) == 1) {
-      broadcastString("0","1");
+      broadcastString("0","0");
     }
 
     if (GpioGetValue(s_button) == 0) {
@@ -117,10 +116,11 @@ int main ( int argc, char* argv[] ) {
 	//webData(1, "0");
 	broadcastString("1","0");
 	speakerStatus = 0;
+	usleep(100000);
       }
     }
     
-    usleep(150000); // 150ms
+    usleep(50000); // 50ms
   }
   
 }
