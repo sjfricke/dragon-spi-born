@@ -12,6 +12,36 @@ class Renderer {
             this.$container.append(this.app.view);
             this.elems = {};
             this.app.stage.interactive = true;
+            this.editorFilter = new PIXI.Filter(null, `
+                    precision mediump float;
+                    varying vec2 vTextureCoord;
+                    uniform sampler2D uSampler;
+                    uniform float mode;
+                    // Brightness-Saturation-Contrast Filter
+                    vec3 applyBSC(vec4 color, float brightness, float saturation, float contrast)
+                    {
+	                    vec3 color_B  = color.rgb * (1.0 +color.a * (brightness -1.0));
+	                    vec3 intensity = vec3(dot(color_B, vec3(0.2125, 0.7154, 0.0721)));
+	                    vec3 color_BS  = mix(intensity, color_B, 1.0 + color.a * (saturation -1.0));
+	                    vec3 color_BSC  = mix(vec3(0.5, 0.5, 0.5), color_BS, 1.0 + color.a * (contrast - 1.0));
+	                    return color_BSC;
+                    }
+                    void main(void)
+                    {
+                        float x = vTextureCoord.x;
+                        float y = vTextureCoord.y;
+                        vec4 pixel = texture2D(uSampler, vTextureCoord.xy);
+                        if (mode == 0.0) {
+                            gl_FragColor = pixel;
+                        }
+                        else {
+	                        vec3 color = applyBSC(pixel, 0.55, 1.1, 3.0);
+	                        gl_FragColor = vec4(color, pixel.a);
+                        }
+                    }`
+                );
+            this.editorFilter.uniforms.mode = 0.0;
+            this.app.stage.filters = [this.editorFilter];
         }
     }
 

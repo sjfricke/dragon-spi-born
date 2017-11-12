@@ -86,4 +86,9 @@ function run() {
     for (var i = 0; i < appData.length; i++) {
         renderer.displayLayerByID(appData[i].name);
     }
+    let lightSwitch = renderer.getElemByID('switch');
+    lightSwitch.interactive = true;
+    lightSwitch.pointerdown = function () {
+        renderer.editorFilter.uniforms.mode = renderer.editorFilter.uniforms.mode ^ 0x1;
+    }
 }
