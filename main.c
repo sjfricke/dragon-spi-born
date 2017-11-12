@@ -78,6 +78,7 @@ int main ( int argc, char* argv[] ) {
 
   uint16_t s_button;
   uint16_t s_touch;
+  uint16_t s_light1;
 
   float accel_x, accel_y, accel_z;
 
@@ -98,17 +99,27 @@ int main ( int argc, char* argv[] ) {
   s_touch =  GpioDB410cMapping(23);
   GpioEnablePin(s_touch);
   GpioSetDirection(s_touch, INPUT_PIN);
-  
+
   LedSetup();
   LedTurnAllOff();
 
   AccelSetup();
+
+  s_light1 =  GpioDB410cMapping(27);
+  GpioEnablePin(s_light1);
+  GpioSetDirection(s_light1, INPUT_PIN);
+
   
   while(1) {
 
+
+    if (GpioGetValue(s_light1) == 1) {
+      broadcastString("3", "0");
+    }
+    
     AccelGetValue(&accel_x, &accel_y, &accel_z);
     if (accel_x > 1.4 || accel_x < -1.4) {	
-      broadcastString("2":"0");
+      broadcastString("2","0");
     }
     
     if (GpioGetValue(s_touch) == 1) {

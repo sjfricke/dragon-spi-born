@@ -1,7 +1,7 @@
 #include "led.h"
 
-#define LED_COUNT 8
-static uint16_t leds[8] = {31, 32, 33, 34, 29, 27, 26, 25};
+#define LED_COUNT 7
+static uint16_t leds[7] = {31, 32, 33, 34, 29, 26, 25};
 
 void LedSetup() {
     int i;
